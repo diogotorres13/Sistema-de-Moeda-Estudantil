@@ -1,6 +1,5 @@
 # Histórias de Usuário
 
-# Histórias de Usuário
 
 ## HS01 - Cadastro de Alunos
 **Como** Aluno,  

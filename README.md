@@ -149,11 +149,43 @@ cd backend
 ./mvnw clean install
 cd ..
 
-💾 Inicialização do Banco de Dados (PostgreSQL)Para rodar a instância isolada do PostgreSQL na porta padrão sem conflitar com configurações locais, utilize o comando Docker abaixo:Bashdocker run --name meritcoin_postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=senha-segura-123 -e POSTGRES_DB=meritcoin_db -p 5432:5432 -d postgres:16
-⚡ Como Executar a AplicaçãoCom o banco de dados rodando em background, inicie a API do Spring Boot. Ela automaticamente servirá os arquivos estáticos do front-end contidos em /src/main/resources/static:Bashcd backend
+ ## 🗄️ Inicialização do Banco de Dados (PostgreSQL)
+
+Para rodar a instância isolada do PostgreSQL na porta padrão sem conflitar com configurações locais, utilize o comando Docker abaixo:
+
+```bash
+docker run --name meritcoin_postgres \
+  -e POSTGRES_USER=postgres \
+  -e POSTGRES_PASSWORD=senha-segura-123 \
+  -e POSTGRES_DB=meritcoin_db \
+  -p 5432:5432 \
+  -d postgres:16
+
+## ⚡ Como Executar a Aplicação
+
+Com o banco de dados rodando em background, inicie a API do Spring Boot. Ela automaticamente servirá os arquivos estáticos do front-end contidos em `/src/main/resources/static`:
+
+```bash
+cd backend
 ./mvnw spring-boot:run
-🚀 A aplicação completa estará disponível para testes em seu navegador através do endereço: http://localhost:8080/index.html🚀 DeployPara gerar o artefato final pronto para produção e hospedagem em servidores virtuais (VPS ou plataformas cloud), empacote a aplicação para gerar o executável compactado:Bash./mvnw clean package
-O comando gerará o arquivo executável final dentro da pasta target. Execute-o em produção utilizando:Bashjava -jar target/nome-do-projeto-0.0.1-SNAPSHOT.jar
+
+🚀 A aplicação completa estará disponível para testes em seu navegador através do endereço: `http://localhost:8080/index.html`
+
+---
+
+## 🚀 Deploy
+
+Para gerar o artefato final pronto para produção e hospedagem em servidores virtuais (VPS ou plataformas cloud), empacote a aplicação para gerar o executável compactado:
+
+```bash
+./mvnw clean package
+
+O comando gerará o arquivo executável final dentro da pasta `target`. Execute-o em produção utilizando:
+
+```bash
+java -jar target/nome-do-projeto-0.0.1-SNAPSHOT.jar
+
+
 📂 Estrutura de PastasAbaixo está o mapeamento detalhado da organização interna do projeto MeritCoin:.
 ├── backend/
 │   ├── pom.xml                        # Configurações do Maven e dependências (Spring Boot)
@@ -172,4 +204,27 @@ O comando gerará o arquivo executável final dentro da pasta target. Execute-o 
 │       │           └── dashboard.html # Painéis de controle, Extratos de Envio e Histórico de Resgates
 │       └── test/java/                 # Scripts de teste automatizados e unitários
 └── README.md                          # Documentação oficial guiada do projeto
-🎥 Demonstração🌐 Telas da Aplicação Web (Interface de Alto Contraste)A interface foi projetada visando legibilidade máxima no modo noturno, garantindo contraste ideal entre os rótulos de dados (.form-label) e os inputs em backgrounds escuros.Módulo de Acesso (index.html)Painel do Aluno (dashboard.html)Painel unificado com abas dinâmicas para Login de Usuários, Cadastro de Novos Alunos e Registro de Empresas Parceiras.Apresentação nítida de saldos, extrato detalhado de recompensas dadas por professores e a tabela do Histórico de Vantagens.🔒📊👨‍💻 AutoresDiogo Chaves Torres - Desenvolvedor e Engenheiro de Software - Meu Perfil GitHub⚖️ LicençaEste projeto está sob a licença MIT - consulte o arquivo LICENSE para obter mais detalhes de replicação acadêmica.
+
+## 🎥 Demonstração
+
+### 🌐 Telas da Aplicação Web (Interface de Alto Contraste)
+
+A interface foi projetada visando legibilidade máxima no modo noturno, garantindo contraste ideal entre os rótulos de dados (`.form-label`) e os inputs em backgrounds escuros.
+
+#### Módulo de Acesso (`index.html`)
+* Painel unificado com abas dinâmicas para Login de Usuários, Cadastro de Novos Alunos e Registro de Empresas Parceiras.
+
+#### Painel do Aluno (`dashboard.html`)
+* Apresentação nítida de saldos, extrato detalhado de recompensas dadas por professores e a tabela do Histórico de Vantagens.
+
+---
+
+## 🔒📊👨‍💻 Autores
+
+* **Diogo Chaves Torres** - *Desenvolvedor e Engenheiro de Software* - [Meu Perfil GitHub](https://github.com/diogochavestorres)
+
+---
+
+## ⚖️ Licença
+
+Este projeto está sob a licença MIT - consulte o arquivo `LICENSE` para obter mais detalhes de replicação acadêmica.

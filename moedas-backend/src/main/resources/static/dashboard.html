@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MeritCoin | Dashboard Virtual</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-primary: #000000;
+            --bg-surface: #0c0c0c;
+            --brand-color: #ffffff;
+            --accent-color: #d4af37;
+            --text-main: #ffffff;
+            --border-color: #2c2c2c;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background-color: var(--bg-surface) !important;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+        }
+
+        /* CORRIGIDO: Cores fortes nos rótulos de formulários de envio e criação */
+        .form-label {
+            color: #f1f5f9 !important;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* CORRIGIDO: Input fields com bordas visíveis e texto claro */
+        .form-control, .form-select {
+            background-color: #1a1a1a !important;
+            border: 1px solid #444444 !important;
+            color: #ffffff !important;
+            border-radius: 10px;
+        }
+
+        .form-control::placeholder {
+            color: #94a3b8 !important;
+        }
+
+        .form-select option {
+            background-color: #1a1a1a !important;
+            color: #ffffff !important;
+        }
+
+        /* CORRIGIDO: Tabelas sem contraste de linhas invisíveis */
+        .table {
+            background-color: #0c0c0c !important;
+            color: #ffffff !important;
+        }
+        
+        .table th {
+            background-color: #1a1a1a !important;
+            color: #ffffff !important;
+            border-bottom: 2px solid #333333 !important;
+            font-weight: 600;
+        }
+
+        .table td {
+            background-color: #0c0c0c !important;
+            color: #ffffff !important;
+            border-bottom: 1px solid #222222 !important;
+        }
+
+        .advantage-card-img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            background-color: #151515;
+            margin-bottom: 10px;
+            border: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-dark py-3">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand text-white d-flex align-items-center gap-2 fw-bold" href="#">
+                <span>Merit<span style="color: var(--accent-color)">Coin</span></span>
+            </a>
+            <div class="d-flex gap-2 align-items-center">
+                <button class="btn btn-sm btn-outline-light border-secondary text-white" onclick="zerarSistema()">
+                    <i class="fa-solid fa-trash-can me-1"></i> Zerar LocalStorage
+                </button>
+                <span class="badge bg-white text-dark px-3 py-2 fw-bold" id="tipoBadge">Perfil</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="card p-4 mb-4">
+            <div class="row align-items-center g-3">
+                <div class="col-md-8">
+                    <span class="text-uppercase small fw-bold text-white-50">Ambiente Autenticado</span>
+                    <h2 id="boasVindas" class="mb-0 fw-bold mt-1 text-white">Olá</h2>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <button class="btn btn-outline-danger px-4 btn-sm rounded-3 fw-bold" onclick="logout()">
+                        <i class="fa-solid fa-right-from-bracket me-2"></i>Sair do Sistema
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="dashAluno" style="display: none;">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="card p-4 text-center mb-4" style="border-left: 4px solid var(--accent-color);">
+                        <p class="text-white-50 small fw-bold text-uppercase mb-1">Meu Saldo Atual</p>
+                        <h1 class="display-5 fw-bold text-white mb-2" id="saldoAluno">0 🪙</h1>
+                        <span class="fw-semibold text-warning small" id="perfilCurso">Curso</span>
+                    </div>
+                    
+                    <div class="card p-4">
+                        <h5 class="fw-bold mb-3 text-white"><i class="fa-solid fa-store text-warning me-2"></i>Trocar por Vantagens</h5>
+                        <div id="vitrineAluno" class="row g-2"></div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-8">
+                    <div class="card p-4 mb-4">
+                        <h5 class="fw-bold mb-3 text-white"><i class="fa-solid fa-list-ul text-warning me-2"></i>Extrato de Moedas Recebidas</h5>
+                        <div class="table-responsive">
+                            <table class="table table-dark align-middle m-0">
+                                <thead>
+                                    <tr>
+                                        <th>Remetente (Professor)</th>
+                                        <th>Valor</th>
+                                        <th>Motivo Acadêmico</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="extratoCorpo"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card p-4">
+                        <h5 class="fw-bold mb-3 text-white"><i class="fa-solid fa-receipt text-success me-2"></i>Histórico de Vantagens Resgatadas</h5>
+                        <div class="table-responsive">
+                            <table class="table table-dark align-middle m-0">
+                                <thead>
+                                    <tr>
+                                        <th>Item / Vantagem</th>
+                                        <th>Custo Gasto</th>
+                                        <th>Empresa Parceira</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="historicoTrocasCorpo"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div id="dashProfessor" style="display: none;">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="card p-4 text-center" style="border-left: 4px solid var(--accent-color);">
+                        <p class="text-white-50 small fw-bold text-uppercase mb-1">Moedas Institucionais</p>
+                        <h1 class="display-5 fw-bold text-white mb-2" id="saldoProfessor">0 🪙</h1>
+                        <span class="fw-semibold text-warning small" id="perfilDept">Departamento</span>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="card p-4">
+                        <h5 class="fw-bold mb-3 text-white"><i class="fa-solid fa-paper-plane text-warning me-2"></i>Premiar Aluno com Moedas</h5>
+                        <form id="formEnviarMoedas">
+                            <div class="mb-3">
+                                <label class="form-label">Selecione o Aluno</label>
+                                <select id="envioAluno" class="form-select" required></select>
+                            </div>
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-4">
+                                    <label class="form-label">Quantidade de Moedas</label>
+                                    <input type="number" id="envioQuantidade" class="form-control" min="1" required>
+                                </div>
+                                <div class="col-md-8">
+                                    <label class="form-label">Motivo / Justificativa</label>
+                                    <input type="text" id="envioMotivo" class="form-control" placeholder="Ex: Excelente nota no laboratório prático" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-warning w-100 fw-bold py-2 text-dark">Confirmar Transferência</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="dashEmpresa" style="display: none;">
+            <div class="row g-4">
+                <div class="col-lg-5">
+                    <div class="card p-4">
+                        <h5 class="fw-bold mb-3 text-white"><i class="fa-solid fa-plus-circle text-white me-2"></i>Criar Nova Vantagem</h5>
+                        <form id="formCriarVantagem">
+                            <div class="mb-3">
+                                <label class="form-label">Nome do Benefício / Produto</label>
+                                <input type="text" id="vanNome" class="form-control" placeholder="Ex: Hambúrguer Artesanal" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Custo em Moedas</label>
+                                <input type="number" id="vanCusto" class="form-control" min="1" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">URL da Imagem do Produto (Opcional)</label>
+                                <input type="text" id="vanFotoLink" class="form-control" placeholder="https://images.unsplash.com/...">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Descrição das Regras</label>
+                                <textarea id="vanDesc" class="form-control" rows="2" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-light w-100 fw-bold text-dark">Cadastrar Vantagem</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="card p-4 h-100">
+                        <h5 class="fw-bold mb-3 text-white"><i class="fa-solid fa-store text-white me-2"></i>Vitrine de Itens Publicados</h5>
+                        <div class="row g-2" id="vitrineEmpresa"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const usuarioLogado = JSON.parse(sessionStorage.getItem('usuarioLogado'));
+        if(!usuarioLogado) window.location.href = 'index.html';
+
+        if(!localStorage.getItem('vantagens')) localStorage.setItem('vantagens', JSON.stringify([]));
+        if(!localStorage.getItem('historicoTransacoes')) localStorage.setItem('historicoTransacoes', JSON.stringify([]));
+        if(!localStorage.getItem('historicoTrocas')) localStorage.setItem('historicoTrocas', JSON.stringify([]));
+
+        document.getElementById('boasVindas').innerText = `Olá, ${usuarioLogado.nome}`;
+        document.getElementById('tipoBadge').innerText = usuarioLogado.tipo;
+
+        if(usuarioLogado.tipo === 'ALUNO') {
+            document.getElementById('dashAluno').style.display = 'block';
+            atualizarTelaAluno();
+        } else if(usuarioLogado.tipo === 'PROFESSOR') {
+            document.getElementById('dashProfessor').style.display = 'block';
+            document.getElementById('perfilDept').innerText = usuarioLogado.depto;
+            
+            const profs = JSON.parse(localStorage.getItem('professores'));
+            const pAtual = profs.find(x => x.login === usuarioLogado.login);
+            document.getElementById('saldoProfessor').innerText = `${pAtual.saldo} 🪙`;
+
+            const alunos = JSON.parse(localStorage.getItem('alunos'));
+            const select = document.getElementById('envioAluno');
+            if(alunos.length > 0) {
+                select.innerHTML = alunos.map(a => `<option value="${a.login}">${a.nome} (${a.curso})</option>`).join('');
+            } else {
+                select.innerHTML = `<option value="">Nenhum aluno cadastrado</option>`;
+            }
+        } else if(usuarioLogado.tipo === 'EMPRESA') {
+            document.getElementById('dashEmpresa').style.display = 'block';
+            renderizarVantagensEmpresa();
+        }
+
+        document.getElementById('formEnviarMoedas').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const alunoDestino = document.getElementById('envioAluno').value;
+            const qtd = parseInt(document.getElementById('envioQuantidade').value);
+            const motivo = document.getElementById('envioMotivo').value;
+
+            if(!alunoDestino) return alert('Cadastre ou selecione um aluno válido!');
+
+            let profs = JSON.parse(localStorage.getItem('professores'));
+            let pIndex = profs.findIndex(x => x.login === usuarioLogado.login);
+
+            if(profs[pIndex].saldo < qtd) return alert('Saldo Insuficiente.');
+
+            profs[pIndex].saldo -= qtd;
+            localStorage.setItem('professores', JSON.stringify(profs));
+            document.getElementById('saldoProfessor').innerText = `${profs[pIndex].saldo} 🪙`;
+
+            let alunos = JSON.parse(localStorage.getItem('alunos'));
+            let aIndex = alunos.findIndex(x => x.login === alunoDestino);
+            alunos[aIndex].saldo += qtd;
+            localStorage.setItem('alunos', JSON.stringify(alunos));
+
+            let historico = JSON.parse(localStorage.getItem('historicoTransacoes'));
+            historico.push({
+                alunoLogin: alunoDestino,
+                remetente: usuarioLogado.nome,
+                valor: qtd,
+                motivo: motivo
+            });
+            localStorage.setItem('historicoTransacoes', JSON.stringify(historico));
+
+            alert('Moedas transferidas com sucesso!');
+            document.getElementById('formEnviarMoedas').reset();
+        });
+
+        function atualizarTelaAluno() {
+            const alunos = JSON.parse(localStorage.getItem('alunos'));
+            const aAtual = alunos.find(x => x.login === usuarioLogado.login);
+            
+            document.getElementById('saldoAluno').innerText = `${aAtual.saldo} 🪙`;
+            document.getElementById('perfilCurso').innerText = aAtual.curso;
+
+            // Extrato de Recebimento (Professores)
+            const historico = JSON.parse(localStorage.getItem('historicoTransacoes')) || [];
+            const meuExtrato = historico.filter(t => t.alunoLogin === usuarioLogado.login);
+            const tabelaExtrato = document.getElementById('extratoCorpo');
+            
+            if(meuExtrato.length === 0) {
+                tabelaExtrato.innerHTML = `<tr><td colspan="3" class="text-center text-white-50">Nenhum registro de moedas recebidas.</td></tr>`;
+            } else {
+                tabelaExtrato.innerHTML = meuExtrato.map(t => `
+                    <tr>
+                        <td class="text-white fw-bold">${t.remetente}</td>
+                        <td class="text-success fw-bold">+${t.valor} 🪙</td>
+                        <td class="text-white">${t.motivo}</td>
+                    </tr>
+                `).join('');
+            }
+
+            // GARANTIDO: Histórico de Trocas / Resgates realizados pelo aluno
+            const trocas = JSON.parse(localStorage.getItem('historicoTrocas')) || [];
+            const minhasTrocas = trocas.filter(t => t.alunoLogin === usuarioLogado.login);
+            const tabelaTrocas = document.getElementById('historicoTrocasCorpo');
+
+            if(minhasTrocas.length === 0) {
+                tabelaTrocas.innerHTML = `<tr><td colspan="3" class="text-center text-white-50">Você ainda não trocou moedas por vantagens.</td></tr>`;
+            } else {
+                tabelaTrocas.innerHTML = minhasTrocas.map(t => `
+                    <tr>
+                        <td class="text-white fw-semibold">${t.vantagemNome}</td>
+                        <td class="text-danger fw-bold">-${t.custo} 🪙</td>
+                        <td class="text-white-50">${t.empresa}</td>
+                    </tr>
+                `).join('');
+            }
+
+            // Vitrine de Vantagens
+            const vantagens = JSON.parse(localStorage.getItem('vantagens')) || [];
+            const vitrineAlu = document.getElementById('vitrineAluno');
+            
+            if(vantagens.length === 0) {
+                vitrineAlu.innerHTML = `<p class="text-white-50 small text-center w-100 py-3">Nenhuma vantagem parceira ativa.</p>`;
+            } else {
+                vitrineAlu.innerHTML = vantagens.map((v, idx) => `
+                    <div class="col-12 mb-2">
+                        <div class="p-3 rounded bg-black border border-secondary">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="fw-bold mb-1 text-white">${v.nome}</h6>
+                                    <p class="text-white-50 small mb-1">${v.descricao}</p>
+                                    <span class="badge bg-dark border border-secondary text-warning">${v.custo} moedas</span>
+                                </div>
+                                <button class="btn btn-sm btn-light fw-bold text-dark" onclick="resgatarPremio(${idx}, ${v.custo})">Trocar</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        window.resgatarPremio = function(index, custo) {
+            let alunos = JSON.parse(localStorage.getItem('alunos'));
+            let aIndex = alunos.findIndex(x => x.login === usuarioLogado.login);
+
+            if(alunos[aIndex].saldo < custo) return alert('Saldo insuficiente de moedas.');
+
+            // Deduz o saldo do Aluno
+            alunos[aIndex].saldo -= custo;
+            localStorage.setItem('alunos', JSON.stringify(alunos));
+
+            // Salva no histórico de trocas
+            const vantagens = JSON.parse(localStorage.getItem('vantagens'));
+            const vSelecionada = vantagens[index];
+
+            let trocas = JSON.parse(localStorage.getItem('historicoTrocas')) || [];
+            trocas.push({
+                alunoLogin: usuarioLogado.login,
+                vantagemNome: vSelecionada.nome,
+                custo: custo,
+                empresa: vSelecionada.empresa
+            });
+            localStorage.setItem('historicoTrocas', JSON.stringify(trocas));
+
+            alert('Troca efetuada com sucesso!');
+            atualizarTelaAluno();
+        };
+
+        document.getElementById('formCriarVantagem').addEventListener('submit', (e) => {
+            e.preventDefault();
+            let vantagens = JSON.parse(localStorage.getItem('vantagens'));
+            const nova = {
+                empresa: usuarioLogado.nome,
+                nome: document.getElementById('vanNome').value,
+                custo: parseInt(document.getElementById('vanCusto').value),
+                descricao: document.getElementById('vanDesc').value
+            };
+            vantagens.push(nova);
+            localStorage.setItem('vantagens', JSON.stringify(vantagens));
+            
+            alert('Vantagem integrada com sucesso!');
+            document.getElementById('formCriarVantagem').reset();
+            renderizarVantagensEmpresa();
+        });
+
+        function renderizarVantagensEmpresa() {
+            const vantagens = JSON.parse(localStorage.getItem('vantagens')) || [];
+            const minhasVantagens = vantagens.filter(v => v.empresa === usuarioLogado.nome);
+            const vitrine = document.getElementById('vitrineEmpresa');
+
+            if(minhasVantagens.length === 0) {
+                vitrine.innerHTML = `<div class="col-12 text-center text-white-50 py-4">Nenhum item cadastrado por sua empresa.</div>`;
+            } else {
+                vitrine.innerHTML = minhasVantagens.map(v => `
+                    <div class="col-md-6 mb-2">
+                        <div class="card bg-black border-secondary p-3 h-100">
+                            <span class="badge bg-secondary text-white align-self-start mb-2">${v.custo} moedas</span>
+                            <h6 class="fw-bold text-white mb-1">${v.nome}</h6>
+                            <p class="text-white-50 small mb-0">${v.descricao}</p>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem('usuarioLogado');
+            window.location.href = 'index.html';
+        }
+
+        function zerarSistema() {
+            if(confirm('Tem certeza absoluta? Isso apagará TODOS os cadastros locais e históricos da simulação.')) {
+                localStorage.clear();
+                sessionStorage.clear();
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+</html>

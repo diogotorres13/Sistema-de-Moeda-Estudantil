@@ -1,0 +1,29 @@
+micronaut:
+  application:
+    name: moedas-backend
+  server:
+    port: 8080
+
+datasources:
+  default:
+    url: jdbc:h2:mem:moedasdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password: ""
+    driver-class-name: org.h2.Driver
+
+jpa:
+  default:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update # Cria e atualiza as tabelas automaticamente na base de dados
+        show_sql: true # Mostra as queries no terminal para te ajudar a depurar
+        format_sql: true
+
+micronaut:
+  router:
+    static-resources:
+      default:
+        enabled: true
+        mapping: /**
+        paths: classpath:static

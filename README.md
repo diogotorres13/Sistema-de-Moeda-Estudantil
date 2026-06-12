@@ -2,7 +2,7 @@
 
 ---
 
-# 🪙 Meritus — Sistema de Reconhecimento e Gamificação Acadêmica 👨‍💻
+# Meritus — Sistema de Reconhecimento e Gamificação Acadêmica 👨‍💻
 
 > [!NOTE]
 > Transformando o engajamento estudantil e o mérito acadêmico em vantagens reais através de uma plataforma integrada de moedas virtuais.

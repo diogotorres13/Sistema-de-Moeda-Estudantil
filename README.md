@@ -139,15 +139,18 @@ O arquivo de configuração do Spring está mapeado para buscar as seguintes cre
 
 1. Clone o repositório atual da sua máquina de trabalho:
 ```bash
-git clone <URL_DO_SEU_REPOSITÓRIO>
-cd <pasta-do-projeto>
+git clone (https://github.com/diogotorres13/Sistema-de-Moeda-Estudantil.git)
+cd moedas-backend
+``` 
 
 Acesse o diretório do Back-end e execute o comando do Maven Wrapper para compilar e baixar as dependências declaradas no pom.xml:
 
-2. Bash
+2. 
+``` Bash
 cd backend
 ./mvnw clean install
-cd ..
+cd moedas-backend
+```
 
  ## 🗄️ Inicialização do Banco de Dados (PostgreSQL)
 
@@ -160,7 +163,7 @@ docker run --name meritcoin_postgres \
   -e POSTGRES_DB=meritcoin_db \
   -p 5432:5432 \
   -d postgres:16
-
+```
 ## ⚡ Como Executar a Aplicação
 
 Com o banco de dados rodando em background, inicie a API do Spring Boot. Ela automaticamente servirá os arquivos estáticos do front-end contidos em `/src/main/resources/static`:
@@ -168,7 +171,7 @@ Com o banco de dados rodando em background, inicie a API do Spring Boot. Ela aut
 ```bash
 cd backend
 ./mvnw spring-boot:run
-
+```
 🚀 A aplicação completa estará disponível para testes em seu navegador através do endereço: `http://localhost:8080/index.html`
 
 ---
@@ -179,30 +182,47 @@ Para gerar o artefato final pronto para produção e hospedagem em servidores vi
 
 ```bash
 ./mvnw clean package
-
+```
 O comando gerará o arquivo executável final dentro da pasta `target`. Execute-o em produção utilizando:
 
 ```bash
 java -jar target/nome-do-projeto-0.0.1-SNAPSHOT.jar
-
+```
 
 📂 Estrutura de PastasAbaixo está o mapeamento detalhado da organização interna do projeto MeritCoin:.
+
 ├── backend/
+
 │   ├── pom.xml                        # Configurações do Maven e dependências (Spring Boot)
+
 │   ├── Dockerfile                     # Instruções para dockerização da aplicação
+
 │   └── src/
+
 │       ├── main/
+
 │       │   ├── java/com/meritcoin/app/
+
 │       │   │   ├── controller/        # Endpoints REST expostos
+
 │       │   │   ├── service/           # Camada de Regras de Negócio e validação de saldos
+
 │       │   │   ├── repository/        # Interfaces de persistência JPA (PostgreSQL)
+
 │       │   │   └── model/             # Entidades de dados (Aluno, Professor, Empresa, Troca)
+
 │       │   └── resources/
+
 │       │       ├── application.yml    # Parametrização das conexões e portas do Spring
+
 │       │       └── static/            # Camada de Visão (Front-end Integrado)
+
 │       │           ├── index.html     # Portal de Acesso e Formulários de Cadastro de Alta Visibilidade
+
 │       │           └── dashboard.html # Painéis de controle, Extratos de Envio e Histórico de Resgates
+
 │       └── test/java/                 # Scripts de teste automatizados e unitários
+
 └── README.md                          # Documentação oficial guiada do projeto
 
 ## 🎥 Demonstração
